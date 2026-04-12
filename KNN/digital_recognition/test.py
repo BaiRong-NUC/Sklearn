@@ -35,8 +35,9 @@ def main():
     else:
         x_input = x
 
-    x_scaled = scaler.transform(x_input)
-    # x_scaled = x_input  # 图片读取时已经是0-1的像素值,不需要再缩放了,否则会导致预测结果不正确
+    # x_scaled = scaler.transform(x_input)
+    x_scaled = x_input  # 图片读取时已经是0-1的像素值,不需要再缩放了,否则会导致预测结果不正确
+    x_scaled = x_input.to_numpy() if isinstance(x_input, pd.DataFrame) else x_input
     pred = knn.predict(x_scaled)[0]
 
     print(f"输入图片: {image_path}")
