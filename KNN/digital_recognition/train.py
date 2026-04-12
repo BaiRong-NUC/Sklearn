@@ -43,7 +43,7 @@ for idx in range(min(1, len(scaled_df))):
 
 # 3. 拆分数据集 startify=label参数确保训练集和测试集中标签分布相似
 x_train, x_test, y_train, y_test = train_test_split(
-    data_scaled, label, test_size=0.2, random_state=42, stratify=label
+    data_scaled, label, test_size=0.2, random_state=21, stratify=label
 )
 
 # 4. 特征工程(略)
@@ -51,7 +51,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 # 热力图相关矩阵
 
 # 5. 模型训练
-knn = KNeighborsClassifier(n_neighbors=3)
+knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(x_train, y_train)
 
 # 6. 模型评估
