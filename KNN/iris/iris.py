@@ -173,7 +173,7 @@ print("7. 超参调优")
 param_grid = {
     "n_neighbors": [1, 2, 3, 5, 7],
     "weights": ["uniform", "distance"],
-    "metric": ["euclidean", "manhattan"]
+    "metric": ["euclidean", "manhattan"],
 }
 
 # 使用网格搜索进行超参数调优
@@ -183,6 +183,10 @@ grid_search.fit(x_train, y_train)
 # 输出最佳超参数组合
 print(f"最佳超参数组合: {grid_search.best_params_}")
 print(f"最佳交叉验证准确率: {grid_search.best_score_:.4f}")
+print(f"最佳模型: {grid_search.best_estimator_}")
+print(
+    f"每轮交叉验证结果:\n{pd.DataFrame(grid_search.cv_results_)[['params', 'mean_test_score', 'std_test_score']]}"
+)
 
 # 使用最佳超参数组合训练模型
 best_knn = grid_search.best_estimator_
@@ -191,4 +195,3 @@ best_knn.fit(x_train, y_train)
 # 在测试集上评估模型性能
 y_test_pred = best_knn.predict(x_test)
 print(f"测试集准确率: {accuracy_score(y_test, y_test_pred):.4f}")
-
