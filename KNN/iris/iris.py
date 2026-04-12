@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.model_selection import GridSearchCV
 
 # KNN 有监督学习 -> 分类
 print("=" * 60)
@@ -165,3 +166,29 @@ print("6. 模型评估")
 print("acc准确率:", accuracy_score(y_test, y_pred))
 
 # 7. 超参调优
+print("=" * 60)
+print("7. 超参调优")
+
+# 定义超参数网格
+param_grid = {
+    "n_neighbors": [1, 2, 3, 5, 7],
+    "weights": ["uniform", "distance"],
+    "metric": ["euclidean", "manhattan"]
+}
+
+# 使用网格搜索进行超参数调优
+grid_search = GridSearchCV(KNeighborsClassifier(), param_grid, cv=4, scoring="accuracy")
+grid_search.fit(x_train, y_train)
+
+# 输出最佳超参数组合
+print(f"最佳超参数组合: {grid_search.best_params_}")
+print(f"最佳交叉验证准确率: {grid_search.best_score_:.4f}")
+
+# 使用最佳超参数组合训练模型
+best_knn = grid_search.best_estimator_
+best_knn.fit(x_train, y_train)
+
+# 在测试集上评估模型性能
+y_test_pred = best_knn.predict(x_test)
+print(f"测试集准确率: {accuracy_score(y_test, y_test_pred):.4f}")
+
