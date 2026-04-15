@@ -1,5 +1,11 @@
 import pandas as pd
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    confusion_matrix,
+)
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -90,3 +96,11 @@ print("模型召回率:", recall)
 # f1-score: 2 * (精确率 * 召回率) / (精确率 + 召回率)
 f1 = f1_score(y_test, y_pred, pos_label=positive_label)
 print("模型F1分数:", f1)
+
+# 混淆矩阵 # labels参数指定正类和负类的标签顺序，默认是按照标签的自然排序，这里明确指定4为正类，2为负类,先写正类标签再写负类标签
+cm = confusion_matrix(y_test, y_pred, labels=[positive_label, 2])
+print("混淆矩阵:")
+print(cm)
+
+df = pd.DataFrame(cm, index=["实际恶性", "实际良性"], columns=["预测恶性", "预测良性"])
+print(df)
