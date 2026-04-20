@@ -94,3 +94,40 @@ feature_score_matrix.to_csv(
 selected_feature_matrix.to_csv(
     "./LogisticRegression/customer_churn/selected_feature_matrix.csv"
 )
+
+# 4. 划分训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=23, stratify=y
+)
+print("训练集特征形状:", X_train.shape)
+print("测试集特征形状:", X_test.shape)
+print("训练集目标形状:", y_train.shape)
+print("测试集目标形状:", y_test.shape)
+
+# 5. 特征缩放(归一化,标准化等)
+
+# 6. 模型训练
+model = LogisticRegression(max_iter=1000, random_state=23)
+model.fit(X_train, y_train)
+
+# 7. 模型评估
+print("评估测试集上的模型性能...")
+y_pred = model.predict(X_test)
+y_pred_proba = model.predict_proba(X_test)[:, 1]
+accuracy = accuracy_score(y_test, y_pred)
+roc_auc = roc_auc_score(y_test, y_pred_proba)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+
+print("模型评估结果:")
+print(f"准确率 (Accuracy): {accuracy:.4f}")
+print(f"ROC AUC: {roc_auc:.4f}")
+print(f"精确率 (Precision): {precision:.4f}")
+print(f"召回率 (Recall): {recall:.4f}")
+print(f"F1 分数: {f1:.4f}")
+
+print("\n分类报告:")
+# macro avg: 宏平均,不考虑样本权重,直接求平均;适用于数据均衡的情况
+# weighted avg: 加权平均,考虑样本权重,适用于数据不均衡的情况
+print(classification_report(y_test, y_pred))
