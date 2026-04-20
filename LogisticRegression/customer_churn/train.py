@@ -105,15 +105,18 @@ print("训练集目标形状:", y_train.shape)
 print("测试集目标形状:", y_test.shape)
 
 # 5. 特征缩放(归一化,标准化等)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
 # 6. 模型训练
 model = LogisticRegression(max_iter=1000, random_state=23)
-model.fit(X_train, y_train)
+model.fit(X_train_scaled, y_train)
 
 # 7. 模型评估
 print("评估测试集上的模型性能...")
-y_pred = model.predict(X_test)
-y_pred_proba = model.predict_proba(X_test)[:, 1]
+y_pred = model.predict(X_test_scaled)
+y_pred_proba = model.predict_proba(X_test_scaled)[:, 1]
 accuracy = accuracy_score(y_test, y_pred)
 roc_auc = roc_auc_score(y_test, y_pred_proba)
 precision = precision_score(y_test, y_pred)
