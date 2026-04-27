@@ -33,3 +33,13 @@
 - 文本字段 Name、Ticket、Cabin 需要做特征提取或编码后再使用。
 - Age、Cabin、Embarked 等字段需先处理缺失值。
 - Pclass 是有序分类变量，可保留其顺序信息。
+
+## 4. Embarked 数值标注
+
+在当前项目的预处理脚本中，Embarked 使用如下数字编码：
+
+- C -> 0
+- Q -> 1
+- S -> 2
+
+说明：脚本会先对 Embarked 缺失值进行众数填充，再执行上述映射。

@@ -1,3 +1,4 @@
 .venv/
 .vscode
 *.joblib
+DecisionTree/Survive/decision_tree.png
