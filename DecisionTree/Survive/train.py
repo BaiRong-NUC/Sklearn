@@ -61,7 +61,7 @@ plt.figure(figsize=(30, 20), dpi=100)
 plot_tree(
     model,
     filled=True,  # 节点颜色填充
-    feature_names=X.columns,  # 特征名称
+    feature_names=X.columns.tolist(),  # 特征名称
     class_names=["Not Survived", "Survived"],  # 类别名称
     max_depth=10,  # 限制树的最大深度以便可视化
 )
